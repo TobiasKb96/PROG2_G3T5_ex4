@@ -1,4 +1,4 @@
-package at.ac.fhcampuswien.fhmdb.observerPattern;
+package at.ac.fhcampuswien.fhmdb.patterns.observerPattern;
 
 import java.util.ArrayList;
 import java.util.List;

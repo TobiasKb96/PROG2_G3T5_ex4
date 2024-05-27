@@ -2,8 +2,8 @@ package at.ac.fhcampuswien.fhmdb.controllers;
 
 import at.ac.fhcampuswien.fhmdb.interfaces.ClickEventHandler;
 import at.ac.fhcampuswien.fhmdb.database.*;
-import at.ac.fhcampuswien.fhmdb.observerPattern.Observer;
-import at.ac.fhcampuswien.fhmdb.observerPattern.Observable;
+import at.ac.fhcampuswien.fhmdb.patterns.observerPattern.Observer;
+import at.ac.fhcampuswien.fhmdb.patterns.observerPattern.Observable;
 import at.ac.fhcampuswien.fhmdb.ui.UserDialog;
 import at.ac.fhcampuswien.fhmdb.ui.WatchlistCell;
 import com.jfoenix.controls.JFXListView;
