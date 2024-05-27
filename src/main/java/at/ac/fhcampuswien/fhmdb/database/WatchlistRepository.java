@@ -1,13 +1,13 @@
 package at.ac.fhcampuswien.fhmdb.database;
 
-import at.ac.fhcampuswien.fhmdb.observerPattern.Observable;
 import at.ac.fhcampuswien.fhmdb.observerPattern.Observer;
+import at.ac.fhcampuswien.fhmdb.observerPattern.Observable;
 import com.j256.ormlite.dao.Dao;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class WatchlistRepository implements Observable{
+public class WatchlistRepository extends Observable{
 
     List<Observer> observerList = new ArrayList<>();
     Dao<WatchlistMovieEntity, Long> dao;
@@ -34,7 +34,7 @@ public class WatchlistRepository implements Observable{
             long count = dao.queryBuilder().where().eq("apiId", movie.getApiId()).countOf();
             if (count == 0) {
                 dao.create(movie);
-                notifyAllObservers(observerList);
+                notifyAllSubscribers(this);
                 return 1;
             } else {
                 return 0;
@@ -48,27 +48,11 @@ public class WatchlistRepository implements Observable{
     public int removeFromWatchlist(String apiId) throws DataBaseException {
         try {
             dao.delete(dao.queryBuilder().where().eq("apiId", apiId).query());
-            notifyAllObservers(observerList);
+            notifyAllSubscribers(this);
             return 1;
 
         } catch (Exception e) {
             throw new DataBaseException("Error while removing from watchlist");
         }
-    }
-
-
-    @Override
-    public void notifyAllObservers(List<Observer> observerList) {
-        observerList.forEach(Observer::update);
-    }
-
-    @Override
-    public void subscribe(Observer observer) {
-        observerList.add(observer);
-    }
-
-    @Override
-    public void unsubscribe(Observer observer) {
-        observerList.remove(observer);
     }
 }

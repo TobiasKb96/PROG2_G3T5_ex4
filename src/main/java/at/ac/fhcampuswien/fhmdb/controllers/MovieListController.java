@@ -8,6 +8,7 @@ import at.ac.fhcampuswien.fhmdb.models.Genre;
 import at.ac.fhcampuswien.fhmdb.models.Movie;
 import at.ac.fhcampuswien.fhmdb.models.SortedState;
 import at.ac.fhcampuswien.fhmdb.observerPattern.Observer;
+import at.ac.fhcampuswien.fhmdb.observerPattern.Observable;
 import at.ac.fhcampuswien.fhmdb.ui.MovieCell;
 import at.ac.fhcampuswien.fhmdb.ui.UserDialog;
 import com.jfoenix.controls.JFXButton;
@@ -260,8 +261,7 @@ public class MovieListController implements Initializable, Observer {
         sortMovies();
     }
 
-    @Override
-    public void update() {
+    public void update(Observable observable) {
         UserDialog dialog = new UserDialog("Notification", "Movie Successfully added to Watchlist!");
         dialog.show();
     }

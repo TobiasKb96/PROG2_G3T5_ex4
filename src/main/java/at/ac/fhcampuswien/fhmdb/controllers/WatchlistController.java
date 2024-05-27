@@ -3,6 +3,7 @@ package at.ac.fhcampuswien.fhmdb.controllers;
 import at.ac.fhcampuswien.fhmdb.interfaces.ClickEventHandler;
 import at.ac.fhcampuswien.fhmdb.database.*;
 import at.ac.fhcampuswien.fhmdb.observerPattern.Observer;
+import at.ac.fhcampuswien.fhmdb.observerPattern.Observable;
 import at.ac.fhcampuswien.fhmdb.ui.UserDialog;
 import at.ac.fhcampuswien.fhmdb.ui.WatchlistCell;
 import com.jfoenix.controls.JFXListView;
@@ -45,6 +46,7 @@ public class WatchlistController implements Initializable, Observer {
         List<WatchlistMovieEntity> watchlist = new ArrayList<>();
         try {
             watchlistRepository = new WatchlistRepository();
+
             watchlistRepository.subscribe(this);
             watchlist = watchlistRepository.getWatchlist();
 
@@ -72,8 +74,7 @@ public class WatchlistController implements Initializable, Observer {
         System.out.println("WatchlistController initialized");
     }
 
-    @Override
-    public void update() {
+    public void update(Observable observable) {
         UserDialog dialog = new UserDialog("Notification", "Movie removed from Watchlist!");
         dialog.show();
     }
