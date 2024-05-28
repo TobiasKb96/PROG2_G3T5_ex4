@@ -4,6 +4,7 @@ import at.ac.fhcampuswien.fhmdb.interfaces.ClickEventHandler;
 import at.ac.fhcampuswien.fhmdb.database.*;
 import at.ac.fhcampuswien.fhmdb.patterns.observerPattern.Observer;
 import at.ac.fhcampuswien.fhmdb.patterns.observerPattern.Observable;
+import at.ac.fhcampuswien.fhmdb.patterns.observerPattern.NotificationType;
 import at.ac.fhcampuswien.fhmdb.ui.UserDialog;
 import at.ac.fhcampuswien.fhmdb.ui.WatchlistCell;
 import com.jfoenix.controls.JFXListView;
@@ -47,11 +48,10 @@ public class WatchlistController implements Initializable, Observer {
         try {
             //Get instance of WatchlistRepository only once
             watchlistRepository =  WatchlistRepository.getInstance();
-
-            watchlistRepository.subscribe(this);
+            watchlistRepository.subscribe(this, NotificationType.WatchlistREMOVE);
             watchlist = watchlistRepository.getWatchlist();
 
-            MovieRepository movieRepository = new MovieRepository();
+            MovieRepository movieRepository = MovieRepository.getInstance();
             List<MovieEntity> movies = new ArrayList<>();
 
             for(WatchlistMovieEntity movie : watchlist) {

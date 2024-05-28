@@ -1,15 +1,13 @@
 package at.ac.fhcampuswien.fhmdb.database;
 
-import at.ac.fhcampuswien.fhmdb.patterns.observerPattern.Observer;
 import at.ac.fhcampuswien.fhmdb.patterns.observerPattern.Observable;
+import at.ac.fhcampuswien.fhmdb.patterns.observerPattern.NotificationType;
 import com.j256.ormlite.dao.Dao;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class WatchlistRepository extends Observable{
 
-    List<Observer> observerList = new ArrayList<>();
     Dao<WatchlistMovieEntity, Long> dao;
 
     private static WatchlistRepository instance;
@@ -37,7 +35,7 @@ public class WatchlistRepository extends Observable{
             long count = dao.queryBuilder().where().eq("apiId", movie.getApiId()).countOf();
             if (count == 0) {
                 dao.create(movie);
-                notifyAllSubscribers(this);
+                notifyAllSubscribers(NotificationType.WatchlistADD);
                 return 1;
             } else {
                 return 0;
@@ -51,7 +49,7 @@ public class WatchlistRepository extends Observable{
     public int removeFromWatchlist(String apiId) throws DataBaseException {
         try {
             dao.delete(dao.queryBuilder().where().eq("apiId", apiId).query());
-            notifyAllSubscribers(this);
+            notifyAllSubscribers(NotificationType.WatchlistREMOVE);
             return 1;
 
         } catch (Exception e) {

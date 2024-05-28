@@ -9,6 +9,7 @@ import at.ac.fhcampuswien.fhmdb.models.Movie;
 import at.ac.fhcampuswien.fhmdb.models.SortedState;
 import at.ac.fhcampuswien.fhmdb.patterns.observerPattern.Observer;
 import at.ac.fhcampuswien.fhmdb.patterns.observerPattern.Observable;
+import at.ac.fhcampuswien.fhmdb.patterns.observerPattern.NotificationType;
 import at.ac.fhcampuswien.fhmdb.ui.MovieCell;
 import at.ac.fhcampuswien.fhmdb.ui.UserDialog;
 import com.jfoenix.controls.JFXButton;
@@ -63,7 +64,7 @@ public class MovieListController implements Initializable, Observer {
                     movie.getId());
             try {
                 WatchlistRepository watchlistRepository = WatchlistRepository.getInstance();
-                watchlistRepository.subscribe(this);
+                watchlistRepository.subscribe(this, NotificationType.WatchlistADD);
                 watchlistRepository.addToWatchlist(watchlistMovieEntity);
             } catch (DataBaseException e) {
                 UserDialog dialog = new UserDialog("Database Error", "Could not add movie to watchlist");
@@ -97,7 +98,7 @@ public class MovieListController implements Initializable, Observer {
 
     private List<Movie> readCache() {
         try {
-            MovieRepository movieRepository = new MovieRepository();
+            MovieRepository movieRepository = MovieRepository.getInstance();
             return MovieEntity.toMovies(movieRepository.getAllMovies());
         } catch (DataBaseException e) {
             UserDialog dialog = new UserDialog("DB Error", "Could not load movies from DB");
@@ -109,7 +110,7 @@ public class MovieListController implements Initializable, Observer {
     private void writeCache(List<Movie> movies) {
         try {
             // cache movies in db
-            MovieRepository movieRepository = new MovieRepository();
+            MovieRepository movieRepository = MovieRepository.getInstance();
             movieRepository.removeAll();
             movieRepository.addAllMovies(movies);
 
