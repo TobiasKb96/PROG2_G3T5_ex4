@@ -7,6 +7,7 @@ import java.util.List;
 
 public class MovieRepository {
     Dao<MovieEntity, Long> dao;
+    private static MovieRepository instance;
 
     public MovieRepository() throws DataBaseException {
         try {
@@ -61,4 +62,11 @@ public class MovieRepository {
         }
     }
 
+    //Getter for singleton pattern
+    public static MovieRepository getInstance() throws DataBaseException {
+        if (instance == null) {
+            instance = new MovieRepository();
+        }
+        return instance;
+    }
 }

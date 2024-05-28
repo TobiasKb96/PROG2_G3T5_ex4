@@ -12,7 +12,10 @@ public class WatchlistRepository extends Observable{
     List<Observer> observerList = new ArrayList<>();
     Dao<WatchlistMovieEntity, Long> dao;
 
-    public WatchlistRepository() throws DataBaseException {
+    private static WatchlistRepository instance;
+
+
+    private WatchlistRepository() throws DataBaseException {
         try {
             this.dao = DatabaseManager.getInstance().getWatchlistDao();
         } catch (Exception e) {
@@ -54,5 +57,13 @@ public class WatchlistRepository extends Observable{
         } catch (Exception e) {
             throw new DataBaseException("Error while removing from watchlist");
         }
+    }
+
+    //Getter for singleton pattern
+    public static WatchlistRepository getInstance() throws DataBaseException {
+        if (instance == null) {
+            instance = new WatchlistRepository();
+        }
+        return instance;
     }
 }

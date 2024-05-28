@@ -62,7 +62,7 @@ public class MovieListController implements Initializable, Observer {
             WatchlistMovieEntity watchlistMovieEntity = new WatchlistMovieEntity(
                     movie.getId());
             try {
-                WatchlistRepository watchlistRepository = new WatchlistRepository();
+                WatchlistRepository watchlistRepository = WatchlistRepository.getInstance();
                 watchlistRepository.subscribe(this);
                 watchlistRepository.addToWatchlist(watchlistMovieEntity);
             } catch (DataBaseException e) {

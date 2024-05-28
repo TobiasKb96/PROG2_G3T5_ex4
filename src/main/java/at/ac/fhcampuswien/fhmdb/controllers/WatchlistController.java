@@ -45,7 +45,8 @@ public class WatchlistController implements Initializable, Observer {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         List<WatchlistMovieEntity> watchlist = new ArrayList<>();
         try {
-            watchlistRepository = new WatchlistRepository();
+            //Get instance of WatchlistRepository only once
+            watchlistRepository =  WatchlistRepository.getInstance();
 
             watchlistRepository.subscribe(this);
             watchlist = watchlistRepository.getWatchlist();
