@@ -14,12 +14,12 @@ public class FhmdbApplication extends Application {
     @Override
     public void start(Stage stage) {
         FXMLLoader fxmlLoader = new FXMLLoader(FhmdbApplication.class.getResource(UIComponent.HOME.path));
+        fxmlLoader.setControllerFactory(ControllerFactory.getInstance());
 
         try{
-            ControllerFactory controllerFactory = new ControllerFactory();
             Scene scene = new Scene(fxmlLoader.load(), 890, 620);
             scene.getStylesheets().add(Objects.requireNonNull(FhmdbApplication.class.getResource("/styles/styles.css")).toExternalForm());
-            fxmlLoader.setControllerFactory(controllerFactory);
+
             stage.setTitle("FHMDb!");
             stage.setScene(scene);
             stage.show();

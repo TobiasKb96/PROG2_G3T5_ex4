@@ -2,6 +2,7 @@ package at.ac.fhcampuswien.fhmdb.controllers;
 
 import at.ac.fhcampuswien.fhmdb.enums.UIComponent;
 import at.ac.fhcampuswien.fhmdb.models.Movie;
+import at.ac.fhcampuswien.fhmdb.patterns.factoryPattern.ControllerFactory;
 import com.jfoenix.controls.*;
 import com.jfoenix.transitions.hamburger.HamburgerBasicCloseTransition;
 import javafx.animation.TranslateTransition;
@@ -30,17 +31,6 @@ public class MainController {
     private HamburgerBasicCloseTransition transition;
 
     private static MainController instance;
-
-    private MainController (){
-
-    }
-
-    public static MainController getInstance(){
-        if (instance == null) {
-            instance = new MainController();
-        }
-        return instance;
-    }
 
 
     public void initialize() {
@@ -80,6 +70,7 @@ public class MainController {
 
     public void setContent(String fxmlPath){
         FXMLLoader loader = new FXMLLoader(MainController.class.getResource(fxmlPath));
+        loader.setControllerFactory(ControllerFactory.getInstance());
         try {
             mainPane.setCenter(loader.load());
         } catch (Exception e) {

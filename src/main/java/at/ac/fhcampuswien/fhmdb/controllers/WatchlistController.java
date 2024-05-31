@@ -29,16 +29,6 @@ public class WatchlistController implements Initializable, Observer {
 
     private static WatchlistController instance;
 
-    private WatchlistController (){
-
-    }
-
-    public static WatchlistController getInstance(){
-        if (instance == null) {
-            instance = new WatchlistController();
-        }
-        return instance;
-    }
     private final ClickEventHandler onRemoveFromWatchlistClicked = (o) -> {
         if (o instanceof MovieEntity) {
             MovieEntity movieEntity = (MovieEntity) o;

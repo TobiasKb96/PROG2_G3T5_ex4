@@ -8,10 +8,19 @@ import java.util.Objects;
 
 public class ControllerFactory implements Callback<Class<?>, Object> {
 
-
-
     // TODO: create MyCtrl as singleton instance
+    private static ControllerFactory instance;
 
+    private ControllerFactory(){
+
+    }
+
+    public static ControllerFactory getInstance(){
+        if(instance == null){
+            return new ControllerFactory();
+        }
+        else return instance;
+    }
     private static final Map<Class<?>, Object> instances = new HashMap<>();
 
     @Override
