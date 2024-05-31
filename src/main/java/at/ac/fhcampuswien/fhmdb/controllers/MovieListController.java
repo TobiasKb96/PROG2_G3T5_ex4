@@ -60,6 +60,19 @@ public class MovieListController implements Initializable, Observer {
     private SortingState state=new NotSorted(this);
 
 
+    private static MovieListController instance;
+
+    private MovieListController (){
+
+    }
+
+    public static MovieListController getInstance(){
+        if (instance == null) {
+            instance = new MovieListController();
+        }
+        return instance;
+    }
+
     private final ClickEventHandler onAddToWatchlistClicked = (clickedItem) -> {
         if (clickedItem instanceof Movie movie) {
             WatchlistMovieEntity watchlistMovieEntity = new WatchlistMovieEntity(

@@ -29,6 +29,20 @@ public class MainController {
 
     private HamburgerBasicCloseTransition transition;
 
+    private static MainController instance;
+
+    private MainController (){
+
+    }
+
+    public static MainController getInstance(){
+        if (instance == null) {
+            instance = new MainController();
+        }
+        return instance;
+    }
+
+
     public void initialize() {
         transition = new HamburgerBasicCloseTransition(hamburgerMenu);
         transition.setRate(-1);

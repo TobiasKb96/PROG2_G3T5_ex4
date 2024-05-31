@@ -2,31 +2,32 @@ package at.ac.fhcampuswien.fhmdb.patterns.factoryPattern;
 
 import javafx.util.Callback;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
+
 public class ControllerFactory implements Callback<Class<?>, Object> {
 
-    private static ControllerFactory instance;
+
 
     // TODO: create MyCtrl as singleton instance
 
-    public static ControllerFactory getInstance() {
-        if (instance == null) {
-            return new ControllerFactory();
-        } else return instance;
-    }
+    private static final Map<Class<?>, Object> instances = new HashMap<>();
 
     @Override
     public Object call(Class<?> aClass) {
-        if (instance == null) {
+        if ((!instances.containsKey(aClass))) {
             try {
-                instance = (ControllerFactory) aClass.getDeclaredConstructor().newInstance();
-                return instance;
+                Object instance = aClass.getDeclaredConstructor().newInstance();
+                instances.put(aClass, instance);
+                return instances.get(aClass);
             }
             catch (Exception e) {
                 e.printStackTrace();
                 return 0;
             }
         }
-        else return instance;
+        else return instances.get(aClass);
     }
 
 }
