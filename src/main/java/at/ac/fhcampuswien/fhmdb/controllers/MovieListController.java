@@ -9,8 +9,10 @@ import at.ac.fhcampuswien.fhmdb.models.Movie;
 import at.ac.fhcampuswien.fhmdb.models.SortedState;
 import at.ac.fhcampuswien.fhmdb.patterns.observerPattern.Observer;
 import at.ac.fhcampuswien.fhmdb.patterns.observerPattern.Observable;
+import at.ac.fhcampuswien.fhmdb.patterns.statePattern.NotSorted;
 import at.ac.fhcampuswien.fhmdb.ui.MovieCell;
 import at.ac.fhcampuswien.fhmdb.ui.UserDialog;
+import at.ac.fhcampuswien.fhmdb.patterns.statePattern.SortingState;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXListView;
@@ -54,7 +56,7 @@ public class MovieListController implements Initializable, Observer {
     protected ObservableList<Movie> observableMovies = FXCollections.observableArrayList();
 
     protected SortedState sortedState;
-
+    private SortingState state=new NotSorted(this);
 
 
     private final ClickEventHandler onAddToWatchlistClicked = (clickedItem) -> {
@@ -159,6 +161,7 @@ public class MovieListController implements Initializable, Observer {
         observableMovies.clear();
         observableMovies.addAll(movies);
     }
+    /*
     public void sortMovies(){
         if (sortedState == SortedState.NONE || sortedState == SortedState.DESCENDING) {
             sortMovies(SortedState.ASCENDING);
@@ -166,6 +169,7 @@ public class MovieListController implements Initializable, Observer {
             sortMovies(SortedState.DESCENDING);
         }
     }
+     */
     // sort movies based on sortedState
     // by default sorted state is NONE
     // afterwards it switches between ascending and descending
@@ -258,11 +262,15 @@ public class MovieListController implements Initializable, Observer {
     }
 
     public void sortBtnClicked(ActionEvent actionEvent) {
-        sortMovies();
+        state.sort();
     }
 
     public void update(Observable observable) {
         UserDialog dialog = new UserDialog("Notification", "Movie Successfully added to Watchlist!");
         dialog.show();
+    }
+
+    public void setSortedState(SortingState sortingState){
+      state=sortingState;
     }
 }
