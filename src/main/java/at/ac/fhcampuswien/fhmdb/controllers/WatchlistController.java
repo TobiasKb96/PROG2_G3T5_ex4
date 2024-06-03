@@ -27,8 +27,6 @@ public class WatchlistController implements Initializable, Observer {
 
     protected ObservableList<MovieEntity> observableWatchlist = FXCollections.observableArrayList();
 
-    private static WatchlistController instance;
-
     private final ClickEventHandler onRemoveFromWatchlistClicked = (o) -> {
         if (o instanceof MovieEntity) {
             MovieEntity movieEntity = (MovieEntity) o;
@@ -47,6 +45,7 @@ public class WatchlistController implements Initializable, Observer {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         List<WatchlistMovieEntity> watchlist = new ArrayList<>();
+
         try {
             //Get instance of WatchlistRepository only once
             watchlistRepository =  WatchlistRepository.getInstance();
@@ -59,7 +58,7 @@ public class WatchlistController implements Initializable, Observer {
             for(WatchlistMovieEntity movie : watchlist) {
                 movies.add(movieRepository.getMovie(movie.getApiId()));
             }
-
+            observableWatchlist.clear();
             observableWatchlist.addAll(movies);
             watchlistView.setItems(observableWatchlist);
             watchlistView.setCellFactory(movieListView -> new WatchlistCell(onRemoveFromWatchlistClicked));

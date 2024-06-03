@@ -21,7 +21,7 @@ public class ControllerFactory implements Callback<Class<?>, Object> {
         }
         else return instance;
     }
-    private static final Map<Class<?>, Object> instances = new HashMap<>();
+    private static Map<Class<?>, Object> instances = new HashMap<>();
 
     @Override
     public Object call(Class<?> aClass) {

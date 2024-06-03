@@ -9,7 +9,7 @@ public class MovieRepository {
     Dao<MovieEntity, Long> dao;
     private static MovieRepository instance;
 
-    public MovieRepository() throws DataBaseException {
+    private MovieRepository() throws DataBaseException {
         try {
             this.dao = DatabaseManager.getInstance().getMovieDao();
         } catch (Exception e) {
